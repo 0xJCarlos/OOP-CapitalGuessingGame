@@ -9,15 +9,23 @@ import java.net.URL;
 import org.json.JSONArray;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class APIPaises {
     
+    int indice;
+    
     private static HttpURLConnection conexion;
     
-    public APIPaises(){
-        //Intento 1
+    public APIPaises(StringBuffer cuerpoRespuesta, String nombre, String capital, int indice){
+       cuerpoRespuesta = getCuerpoRespuesta();
+       nombre = getNombre(cuerpoRespuesta.toString(), indice);
+       capital = getCapital(cuerpoRespuesta.toString(), indice); 
+    } //FIN MAIN
+    
+    public static StringBuffer getCuerpoRespuesta(){
         
         BufferedReader reader;
         String line;
@@ -25,7 +33,7 @@ public class APIPaises {
         
         try {
             
-            URL url = new URL("https://restcountries.com/v2/all?fields=name,flag");
+            URL url = new URL("https://restcountries.com/v2/all?fields=name,capital");
             conexion = (HttpURLConnection) url.openConnection( );
             
             //Configuracion para peticiones HTTP
@@ -52,7 +60,9 @@ public class APIPaises {
                 }
                 reader.close();
             } 
-            parse(contenidoRespuesta.toString());
+            //parse(contenidoRespuesta.toString());
+            //System.out.println(getNombre(contenidoRespuesta.toString(),3));
+            //System.out.println(getLinkBandera(contenidoRespuesta.toString(),3));
             
         } catch (MalformedURLException ex) {
             
@@ -61,17 +71,38 @@ public class APIPaises {
         }
         finally{
             conexion.disconnect();
-        }      
-    } //FIN MAIN
+        } 
+        
+        
+        return contenidoRespuesta;
+    }
+    
     public static String parse(String cuerpoRespuesta){
-        JSONArray paises = new JSONArray(cuerpoRespuesta);
+        JSONArray paises = new JSONArray(cuerpoRespuesta); 
         for (int i = 0; i<paises.length(); i++){
             JSONObject pais = paises.getJSONObject(i);
             String nombre = pais.getString("name");
-            String linkBandera = pais.getString("flag");
-            System.out.println(nombre + " " + linkBandera);
+            String capital = pais.getString("capital");
+            
+            System.out.println(nombre + " " + capital);
         }
        return null;
+    }
+    
+    public static String getNombre(String cuerpoRespuesta, int indice) throws JSONException{
+        JSONArray paises = new JSONArray(cuerpoRespuesta);
+        JSONObject pais = paises.getJSONObject(indice);
+        String nombre = pais.getString("name");
+        
+        return nombre;
+    }
+    
+    public static String getCapital(String cuerpoRespuesta, int indice) throws JSONException{
+        JSONArray paises = new JSONArray(cuerpoRespuesta);
+        JSONObject pais = paises.getJSONObject(indice);
+        String capital = pais.getString("capital");
+        
+        return capital;
     }
 }
 
