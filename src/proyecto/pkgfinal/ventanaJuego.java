@@ -35,10 +35,6 @@ import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.apache.batik.transcoder.TranscoderException;
-import org.apache.batik.transcoder.TranscoderInput;
-import org.apache.batik.transcoder.TranscoderOutput;
-import org.apache.batik.transcoder.image.JPEGTranscoder;
 import org.json.JSONException;
 
 
@@ -72,7 +68,7 @@ public class ventanaJuego extends JFrame {
     
     
  
-    public ventanaJuego() throws MalformedURLException, IOException, FileNotFoundException, TranscoderException{
+    public ventanaJuego() throws MalformedURLException, IOException, FileNotFoundException{
         HighScores perfilJugador;
         SortedSet<HighScores> puntajes = new TreeSet<>(Comparator.comparingInt(puntaje->puntaje.puntaje));
         //Configuración básica de la ventana.
@@ -171,7 +167,7 @@ public class ventanaJuego extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 respuestaIntroducida = comprobarRespuesta(); //Comprobar respuesta
                 tieneCapital = false;
-                if(respuestaIntroducida == false){
+                if(respuestaIntroducida == false && (ingresarCapital.getText().trim().length() != 0) && (ingresarCapital.getText() != null)){
                     ingresarCapital.setEditable(false);
                     btnConfirmarRespuesta.setEnabled(false);
                     btnOmitirPregunta.setEnabled(false);
@@ -180,7 +176,7 @@ public class ventanaJuego extends JFrame {
                     System.exit(0);
                 }
                 
-                else if(!tieneCapital){ //Repetir mientras se elija un país sin capital (Antartica Macau, etc.)
+                else if(!tieneCapital && (ingresarCapital.getText().trim().length() != 0) && (ingresarCapital.getText() != null)){ //Repetir mientras se elija un país sin capital (Antartica Macau, etc.)
                     indicePais = generarNumeroRandom(1, 251);
                     nombre = conseguirNombrePais(indicePais);
                     capital = conseguirCapitalPais(indicePais);    
@@ -295,6 +291,7 @@ public class ventanaJuego extends JFrame {
                     "No escribiste nada en el cuadro de texto.",
                     "Ingresa una capital",
                      JOptionPane.WARNING_MESSAGE);
+            
         }
         
         else if (!(respuestaIngresada.equals(capital))){
