@@ -33,7 +33,7 @@ public class APIPaises {
         
         try {
             
-            URL url = new URL("https://restcountries.com/v2/all?fields=name,capital");
+            URL url = new URL("https://restcountries.com/v2/all?fields=name,capital"); //URL DE LA API A CONSUMIR
             conexion = (HttpURLConnection) url.openConnection( );
             
             //Configuracion para peticiones HTTP
@@ -70,13 +70,12 @@ public class APIPaises {
             
         }
         finally{
-            conexion.disconnect();
+            conexion.disconnect(); //CERRAR CONEXIÓN 
         } 
-        
         
         return contenidoRespuesta;
     }
-    
+    //FUNCIÓN PARA DAR FORMATO AL JSON DEVUELTO POR LA LLAMADA A LA API
     public static String parse(String cuerpoRespuesta){
         JSONArray paises = new JSONArray(cuerpoRespuesta); 
         for (int i = 0; i<paises.length(); i++){
@@ -88,7 +87,7 @@ public class APIPaises {
         }
        return null;
     }
-    
+    //FUNCION PARA CONSEGUIR NOMBRE DE UN PAIS
     public static String getNombre(String cuerpoRespuesta, int indice) throws JSONException{
         JSONArray paises = new JSONArray(cuerpoRespuesta);
         JSONObject pais = paises.getJSONObject(indice);
@@ -96,8 +95,8 @@ public class APIPaises {
         
         return nombre;
     }
-    
-    public static String getCapital(String cuerpoRespuesta, int indice) throws JSONException{
+    //FUNCION PARA CONSEGUIR CAPITAL DE UN PAIS
+    public static String getCapital(String cuerpoRespuesta, int indice) throws JSONException{ 
         JSONArray paises = new JSONArray(cuerpoRespuesta);
         JSONObject pais = paises.getJSONObject(indice);
         String capital = pais.getString("capital");

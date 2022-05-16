@@ -1,3 +1,4 @@
+//ESTA PARTE DEL PROYECTO FUE DESCARTADA POR MOTIVOS DE TIEMPO, FAVOR DE IGNORAR, GRACIAS.
 package proyecto.pkgfinal;
 
 public class HighScores {

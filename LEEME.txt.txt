@@ -1,0 +1,12 @@
+A la hora de abrir el proyecto en Netbeans es posible que salga un error con la importación 
+de un archivo.
+
+Ese archivo es json-20220320.jar, necesario para darle formato al contenido
+recibido al consumir la API de REST Countries, que es parte fundamental del proyecto.
+
+El archivo se encuentra en la carpeta del proyecto y solo es cuestión de agregarlo
+al proyecto siguiendo las indicaciones que marque netbeans.
+
+Muchas gracias, le deseo lo mejor. 
+
+-Juan Carlos Solórzano Castanedo
